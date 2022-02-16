@@ -1,0 +1,22 @@
+{
+  "name": "potom-pridumay-bot",
+  "version": "1.0.0",
+  "description": "///",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarkSmersh/potom-pridumay-bot.git"
+  },
+  "keywords": [
+    "vk"
+  ],
+  "author": "MarkSmersh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarkSmersh/potom-pridumay-bot/issues"
+  },
+  "homepage": "https://github.com/MarkSmersh/potom-pridumay-bot#readme"
+}
