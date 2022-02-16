@@ -23,5 +23,3 @@ client.on('message_new', async e => {
 client.on ('error', error => {
   console.log(error)
 })
-
-console.log(client.eventNames())
