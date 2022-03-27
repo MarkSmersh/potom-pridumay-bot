@@ -2,6 +2,7 @@ const getTikTok = require ('../functions/getTikTok')
 const UrlRegex = /^http[s]?:\/\//gm
 
 const message_new = async (e, client) => {
+    console.log(e)
     const Text = e.message.text.toLowerCase()
     const Attachments = e.message.attachments
 
@@ -26,7 +27,7 @@ const message_new = async (e, client) => {
             const AttachmentUrl = (() => {
                 const link = Attachments.find(a => a.type === 'link')
                 if (link !== undefined) return link.link.url
-                return undefined
+                return ''
             })()
             if (Text.match(UrlRegex) === null && AttachmentUrl.match(UrlRegex) === null) return
             await getTikTok(client, e, AttachmentUrl || Text)
