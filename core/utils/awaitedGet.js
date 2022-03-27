@@ -3,7 +3,7 @@ const Stream = require('stream').Transform
 
 async function awaitedGet (url) {
     const Data = new Stream.PassThrough
-    const response = new Promise ((resolve) => {
+    const response = await new Promise ((resolve) => {
         https.get(url, res => {
             res.on('data', data => {
                 Data.write(data)

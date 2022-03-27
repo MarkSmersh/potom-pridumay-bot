@@ -16,7 +16,9 @@ const uploadPost = async (uploadUrl, filepath) => {
     }
 
     const res = await fetch (uploadUrl, {...options})
-    return res.json()
+    const result = await res.json()
+    fs.unlinkSync(filepath)
+    return result
 }
 
 module.exports = uploadPost
