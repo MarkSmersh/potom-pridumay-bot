@@ -2,9 +2,9 @@
   "name": "potom-pridumay-bot",
   "version": "1.0.0",
   "description": "///",
-  "main": "index.js",
+  "main": "test3.mjs",
   "scripts": {
-    "test": "node index.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,11 @@
     "url": "https://github.com/MarkSmersh/potom-pridumay-bot/issues"
   },
   "homepage": "https://github.com/MarkSmersh/potom-pridumay-bot#readme",
-  "engines": {
-    "node": "16.x"
+  "dependencies": {
+    "express": "^4.17.3",
+    "form-data": "^4.0.0",
+    "formidable": "^2.0.1",
+    "node-fetch": "^2.6.7",
+    "puppeteer": "^13.5.1"
   }
 }

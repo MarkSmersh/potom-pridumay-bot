@@ -1,11 +1,10 @@
-const checkClient = require ('../utils/checkClient')
-const awaitedGet = require ('../utils/awaitedGet')
+const checkClient = require ('./utils/checkClient')
+const awaitedGet = require ('./utils/awaitedGet')
 const EventEmitter = require('events');
 
 class Client extends EventEmitter{
 
-    accessToken
-    version
+    accessToken; version
 
     constructor (token, v) {
         super()
@@ -17,7 +16,6 @@ class Client extends EventEmitter{
         if (!checkClient) return
     
         const currentGroup = await this.request('groups.getById')
-        // console.log(currentGroup)
         let LongPollServer = await this.request('groups.getLongPollServer', {'group_id': currentGroup[0]['id']})
         this.ts     = LongPollServer.ts
         this.key    = LongPollServer.key
@@ -38,8 +36,7 @@ class Client extends EventEmitter{
         const answer = await awaitedGet(url)
         if (answer.updates.length !== 0) {
             for (let i = 0; i < answer.updates.length; i++) {
-                console.log(answer['updates'][i]['type'])
-                this.emit(answer['updates'][i]['type'], answer['updates'][i])
+                this.emit(answer['updates'][i]['type'], answer['updates'][i]['object'])
             }
         }
         this.ts = answer.ts

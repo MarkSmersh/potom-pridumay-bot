@@ -1,10 +1,7 @@
-const awaitedGet = require('../utils/awaitedGet')
+const awaitedGet = require('./awaitedGet')
 
 async function checkClient(token, v) {
-
     const data = await awaitedGet (`https://api.vk.com/method/utils.getServerTime?access_token=${token}&v=${v}`)
-
-    console.log(data)
 
     if (data['response']) {
         return true
