@@ -1,1 +1,1 @@
-app: npm start;
+app: node index.js;
