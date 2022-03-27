@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/MarkSmersh/potom-pridumay-bot#readme",
   "dependencies": {
+    "form-data": "^4.0.0",
     "node-fetch": "^2.6.7",
     "puppeteer": "^13.5.1"
   }
