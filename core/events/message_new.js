@@ -26,7 +26,7 @@ const message_new = async (e, client) => {
             const AttachmentUrl = (() => {
                 const link = Attachments.find(a => a.type === 'link')
                 if (link !== undefined) return link.link.url
-                return undefined
+                return ''
             })()
             if (Text.match(UrlRegex) === null && AttachmentUrl.match(UrlRegex) === null) return
             await getTikTok(client, e, AttachmentUrl || Text)

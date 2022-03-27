@@ -8,11 +8,13 @@ const fs = require('fs')
 const publishTikTok = async (c, e, url) => {
     const scrapped = await scrapTikTokPage(url)
     if (scrapped === null) return
+    console.log(scrapped)
 
     const video = await downloadStream(scrapped, 'tmp/', 'mp4')
     if (!video.ok) return { "ok": false, "error": video.error }
     const FilePath =`${video.response.path}${video.response.name}.${video.response.type}`
 
+    console.log(video, FilePath)
     const videoInfoParams = {
         "name": video.response.name,
         "description": "Uploaded with @potom_pridumay_bot",
@@ -24,8 +26,10 @@ const publishTikTok = async (c, e, url) => {
     const uploadUrl = await awaitedGet(
         `https://api.vk.com/method/video.save?${new URLSearchParams(videoInfoParams)}&access_token=${process.env.USERTOKEN || user_token}&v=${c.version}`
     )
+    console.log(uploadUrl)
 
     const response = await uploadPost(uploadUrl.response.upload_url, FilePath)
+    console.log(response)
     const result = await c.request('messages.send', {
         "peer_ids": e.message.peer_id,
         "reply_to": e.message.id,
@@ -33,6 +37,7 @@ const publishTikTok = async (c, e, url) => {
         "attachment": `video${uploadUrl.response.owner_id}_${uploadUrl.response.video_id}`,
         "random_id": 0
     })
+    console.log(result)
 
     fs.rm(video.response.path, { recursive: true, force: true }, (err) => {})
 } 
