@@ -9,7 +9,7 @@ const publishTikTok = async (c, e, url) => {
     const scrapped = await scrapTikTokPage(url)
     if (scrapped === null) return
 
-    const video = await downloadStream(scrapped, './tmp/', 'mp4')
+    const video = await downloadStream(scrapped, 'tmp/', 'mp4')
     if (!video.ok) return { "ok": false, "error": video.error }
     const FilePath =`${video.response.path}${video.response.name}.${video.response.type}`
 
