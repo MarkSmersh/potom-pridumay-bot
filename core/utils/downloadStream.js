@@ -28,7 +28,6 @@ const downloadStream = async (url, filepath, type) => {
             })  
             res.on('error', e => {
                 resolve({"ok": false, "error": e.message})
-                console.log(e)
             })
         })
     })

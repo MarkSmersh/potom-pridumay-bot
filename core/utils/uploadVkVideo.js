@@ -8,6 +8,7 @@ const uploadPost = async (uploadUrl, filepath) => {
     const stats = fs.statSync(filepath)
     const fileSize = stats.size
     const fileStream = fs.createReadStream(filepath)
+
     form.append('video_file', fileStream, { knownLength: fileSize})
 
     const options = {
@@ -17,6 +18,7 @@ const uploadPost = async (uploadUrl, filepath) => {
 
     const res = await fetch (uploadUrl, {...options})
     const result = await res.json()
+    
     fs.unlinkSync(filepath)
     return result
 }

@@ -11,7 +11,6 @@ const scrapPage = async (url) => {
         const browser = await puppeteer.launch({ args: ['--no-sandbox'] })
         const page = await browser.newPage()
         await page.goto(url)
-        url = page.url().match(expectedTTUrl)[0]
         var element = await page.waitForSelector(`video`)
         var videoUrl = await page.evaluate(element => element.src, element) 
         browser.close()

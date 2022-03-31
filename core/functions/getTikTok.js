@@ -10,6 +10,7 @@ const publishTikTok = async (c, e, url) => {
     if (scrapped === null) return
     const video = await downloadStream(scrapped, './tmp/', 'mp4')
     if (!video.ok) return { "ok": false, "error": video.error }
+
     const FilePath =`${video.response.path}${video.response.name}.${video.response.type}`
 
     const videoInfoParams = {
@@ -24,14 +25,28 @@ const publishTikTok = async (c, e, url) => {
         `https://api.vk.com/method/video.save?${new URLSearchParams(videoInfoParams)}&access_token=${process.env.USERTOKEN || user_token}&v=${c.version}`
     )
 
-    await uploadPost(uploadUrl.response.upload_url, FilePath).then(res => {
-        c.request('messages.send', {
-            "peer_ids": e.message.peer_id,
-            "reply_to": e.message.id,
-            "message": "",
-            "attachment": `video${res.owner_id}_${res.video_id}`,
-            "random_id": video.response.name
-        })
+    await uploadPost(uploadUrl.response.upload_url, FilePath).then(async function SendVideo(res, edit = false, c_message_id = null, peer_id = null) {
+        if (!edit) {
+            var message = await c.request('messages.send', {
+                "peer_ids": e.message.peer_id,
+                "message": '',
+                "attachment": `video${res.owner_id}_${res.video_id}`,
+                "random_id": video.response.name
+            })
+            message = message[0]
+        }
+        else if (edit) {
+            var message = await c.request('messages.edit', {
+                "peer_id": e.message.peer_id,
+                "message": ``,
+                "attachment": `video${res.owner_id}_${res.video_id}`,
+                "conversation_message_id": c_message_id 
+            })
+        }
+        const messageInfo = await c.request('messages.getByConversationMessageId', { "peer_id": peer_id || message['peer_id'], "conversation_message_ids": c_message_id || message['conversation_message_id']})
+        if (messageInfo.items[0].attachments.length === 0) await SendVideo(res, true, c_message_id || messageInfo.items[0].conversation_message_id, peer_id || message['peer_id'])
+        
+        // setTimeout(() => { c.request('messages.send', {"peer_ids": e.message.peer_id,"reply_to": e.message.id,"message": video.response.name,"attachment": `video${res.owner_id}_${res.video_id}`,"random_id": video.response.name + 1})}, 10 * 1000)
     })
     return { "ok": true, "response": FilePath }
 } 

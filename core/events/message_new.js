@@ -13,8 +13,7 @@ const message_new = async (e, client) => {
                 { 'peer_ids': e.message.peer_id, 
                 'message': `Пинг...`, 
                 'random_id': '0'}
-            )
-        
+            )        
             await client.request('messages.edit', 
                 {'peer_id': e.message.peer_id, 
                 'message': `Понг: ${Date.now() - lastData} мс`, 
@@ -30,8 +29,7 @@ const message_new = async (e, client) => {
                 return ''
             })()
             if (Text.match(UrlRegex) === null && AttachmentUrl.match(UrlRegex) === null) return
-            const res = await getTikTok(client, e, AttachmentUrl || Text)
-            console.log(res)
+            const res = await getTikTok(client, e, AttachmentUrl || e.message.text)
         }
     }
 }
