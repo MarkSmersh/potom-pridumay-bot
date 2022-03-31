@@ -12,6 +12,7 @@ const scrapPage = async (url) => {
         const page = await browser.newPage()
         await page.goto(url)
         var element = await page.waitForSelector(`video`)
+        if (page.url().match(expectedTTUrl)[0] === 'https://www.tiktok.com/') return null
         var videoUrl = await page.evaluate(element => element.src, element) 
         browser.close()
     } catch (e) {
